@@ -1,5 +1,93 @@
+import { type FormEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { supabase } from "@/lib/supabase";
+
 function Login() {
-  return <h1>Login</h1>;
+  const navigate = useNavigate();
+  const [mail, setMail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError("");
+    setSuccessMessage("");
+    setIsSubmitting(true);
+
+    const { error: loginError } = await supabase.auth.signInWithPassword({
+      email: mail.trim().toLowerCase(),
+      password,
+    });
+
+    if (loginError) {
+      setError(loginError.message);
+      setIsSubmitting(false);
+      return;
+    }
+
+    setSuccessMessage("Sesion iniciada correctamente.");
+    setTimeout(() => navigate("/my-appointments"), 800);
+  };
+
+  return (
+    <main className="flex min-h-svh items-center justify-center bg-background px-4 py-8 text-left">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>Iniciar sesion</CardTitle>
+          <CardDescription>Ingresa para ver tus turnos en Trimly.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form className="grid gap-4" onSubmit={handleSubmit}>
+            <div className="grid gap-2">
+              <Label htmlFor="mail">Mail</Label>
+              <Input
+                autoComplete="email"
+                id="mail"
+                required
+                type="email"
+                value={mail}
+                onChange={(event) => setMail(event.target.value)}
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="password">Contrasena</Label>
+              <Input
+                autoComplete="current-password"
+                id="password"
+                required
+                type="password"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </div>
+
+            {error ? <p className="text-sm text-destructive">{error}</p> : null}
+            {successMessage ? (
+              <p className="text-sm text-emerald-600">{successMessage}</p>
+            ) : null}
+
+            <Button className="mt-2 w-full" disabled={isSubmitting} type="submit">
+              {isSubmitting ? "Ingresando..." : "Ingresar"}
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </main>
+  );
 }
 
 export default Login;
