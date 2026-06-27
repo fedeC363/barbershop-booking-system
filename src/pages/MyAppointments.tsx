@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
 
 type Appointment = {
@@ -65,7 +66,12 @@ function MyAppointments() {
   return (
     <main className="min-h-svh bg-background px-4 py-8">
       <div className="mx-auto w-full max-w-3xl">
-        <h1 className="mb-6 text-3xl font-bold">Mis Turnos</h1>
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+          <h1 className="m-0 text-3xl font-bold">Mis Turnos</h1>
+          <Button onClick={() => navigate("/book-appointment")}>
+            Reservar nuevo turno
+          </Button>
+        </div>
 
         {isLoading ? <p>Cargando turnos...</p> : null}
         {error ? <p className="text-destructive">{error}</p> : null}

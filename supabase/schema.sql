@@ -15,5 +15,10 @@ create table if not exists public.turnos (
   hora time not null,
   servicio text not null,
   precio numeric(10,2) not null,
-  estado text not null check (estado in ('CONFIRMADO', 'CANCELADO'))
+  estado text not null check (estado in ('PENDIENTE', 'CONFIRMADO', 'CANCELADO', 'FINALIZADO'))
 );
+
+alter table public.turnos drop constraint if exists turnos_estado_check;
+alter table public.turnos
+  add constraint turnos_estado_check
+  check (estado in ('PENDIENTE', 'CONFIRMADO', 'CANCELADO', 'FINALIZADO'));

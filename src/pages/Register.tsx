@@ -1,4 +1,5 @@
 import { type FormEvent, useState } from "react";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -189,6 +190,13 @@ function Register() {
             <Button className="mt-2 w-full" disabled={isSubmitting} type="submit">
               {isSubmitting ? "Registrando..." : "Registrarme"}
             </Button>
+
+            <Link
+              className="text-center text-sm text-muted-foreground underline-offset-4 hover:underline"
+              to="/login"
+            >
+              ¿Ya tienes cuenta? Iniciar sesión
+            </Link>
           </form>
         </CardContent>
       </Card>

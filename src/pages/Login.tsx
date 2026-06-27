@@ -1,5 +1,5 @@
 import { type FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -83,6 +83,13 @@ function Login() {
             <Button className="mt-2 w-full" disabled={isSubmitting} type="submit">
               {isSubmitting ? "Ingresando..." : "Ingresar"}
             </Button>
+
+            <Link
+              className="text-center text-sm text-muted-foreground underline-offset-4 hover:underline"
+              to="/register"
+            >
+              ¿No tienes cuenta? Registrarse
+            </Link>
           </form>
         </CardContent>
       </Card>
