@@ -12,6 +12,10 @@ import {
 import { supabase } from "@/lib/supabase";
 
 type Service = "Corte" | "Barba" | "Corte y Barba";
+type Barber = {
+  id: string;
+  nombre: string;
+};
 
 const hours = [
   "09:00", "10:00", "11:00", "12:00", "13:00", "14:00",
@@ -32,6 +36,8 @@ function BookAppointment() {
   const [fecha, setFecha] = useState("");
   const [hora, setHora] = useState("");
   const [servicio, setServicio] = useState<Service | null>(null);
+  const [peluqueroId, setPeluqueroId] = useState("");
+  const [peluqueros, setPeluqueros] = useState<Barber[]>([]);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -66,6 +72,18 @@ function BookAppointment() {
         navigate("/login", { replace: true });
         return;
       }
+
+      const { data, error: barbersError } = await supabase
+        .from("peluqueros")
+        .select("id, nombre")
+        .order("nombre");
+
+      if (!isMounted) return;
+      if (barbersError) {
+        setError(barbersError.message);
+      } else {
+        setPeluqueros(data ?? []);
+      }
       setIsCheckingAuth(false);
     };
 
@@ -95,8 +113,8 @@ function BookAppointment() {
       return;
     }
 
-    if (!hora || !servicio) {
-      setError("Selecciona un horario y un servicio.");
+    if (!hora || !servicio || !peluqueroId) {
+      setError("Selecciona un horario, un servicio y un peluquero.");
       return;
     }
 
@@ -111,10 +129,34 @@ function BookAppointment() {
       return;
     }
 
+    const { data: existingAppointment, error: availabilityError } =
+      await supabase
+        .from("turnos")
+        .select("id")
+        .eq("peluquero_id", peluqueroId)
+        .eq("fecha", fecha)
+        .eq("hora", hora)
+        .limit(1)
+        .maybeSingle();
+
+    if (availabilityError) {
+      setError(availabilityError.message);
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (existingAppointment) {
+      setError(
+        "Ese horario ya se encuentra reservado para el peluquero seleccionado.",
+      );
+      setIsSubmitting(false);
+      return;
+    }
+
     // Inserta la reserva real en Supabase usando el usuario de la sesión activa.
     const { error: insertError } = await supabase.from("turnos").insert({
       usuario_id: user.id,
-      peluquero_id: user.id,
+      peluquero_id: peluqueroId,
       fecha,
       hora,
       servicio,
@@ -247,6 +289,32 @@ function BookAppointment() {
           </CardContent>
         </Card>
 
+        <Card>
+          <CardHeader>
+            <CardTitle>Selecciona el peluquero</CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-3 sm:grid-cols-4">
+            {peluqueros.map((peluquero) => {
+              const isSelected = peluqueroId === peluquero.id;
+              return (
+                <Button
+                  aria-pressed={isSelected}
+                  className={
+                    isSelected
+                      ? "h-14 text-base"
+                      : "h-14 bg-secondary text-base text-secondary-foreground hover:bg-secondary/70"
+                  }
+                  key={peluquero.id}
+                  onClick={() => setPeluqueroId(peluquero.id)}
+                  type="button"
+                >
+                  {peluquero.nombre}
+                </Button>
+              );
+            })}
+          </CardContent>
+        </Card>
+
         {error ? <p className="text-sm text-destructive">{error}</p> : null}
         {successMessage ? (
           <p className="text-sm text-emerald-600">{successMessage}</p>
@@ -254,7 +322,7 @@ function BookAppointment() {
 
         <Button
           className="h-12 w-full text-base"
-          disabled={isSubmitting || !fecha || !hora || !servicio}
+          disabled={isSubmitting || !fecha || !hora || !servicio || !peluqueroId}
           type="submit"
         >
           {isSubmitting ? "Reservando..." : "Reservar turno"}

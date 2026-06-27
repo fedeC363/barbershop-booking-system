@@ -16,6 +16,7 @@ type Appointment = {
   hora: string;
   servicio: string;
   estado: string;
+  peluqueros: { nombre: string } | { nombre: string }[] | null;
 };
 
 function MyAppointments() {
@@ -42,7 +43,7 @@ function MyAppointments() {
 
       const { data, error: appointmentsError } = await supabase
         .from("turnos")
-        .select("id, fecha, hora, servicio, estado")
+        .select("id, fecha, hora, servicio, estado, peluqueros(nombre)")
         .eq("usuario_id", user.id);
 
       if (!isMounted) return;
@@ -103,6 +104,12 @@ function MyAppointments() {
                   <p>
                     <span className="font-medium">Estado:</span>{" "}
                     {appointment.estado}
+                  </p>
+                  <p>
+                    <span className="font-medium">Peluquero:</span>{" "}
+                    {Array.isArray(appointment.peluqueros)
+                      ? appointment.peluqueros[0]?.nombre ?? "Sin asignar"
+                      : appointment.peluqueros?.nombre ?? "Sin asignar"}
                   </p>
                 </CardContent>
               </Card>
