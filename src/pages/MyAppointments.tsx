@@ -25,6 +25,11 @@ function MyAppointments() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    navigate("/login", { replace: true });
+  };
+
   useEffect(() => {
     let isMounted = true;
 
@@ -69,9 +74,12 @@ function MyAppointments() {
       <div className="mx-auto w-full max-w-3xl">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <h1 className="m-0 text-3xl font-bold">Mis Turnos</h1>
-          <Button onClick={() => navigate("/book-appointment")}>
-            Reservar nuevo turno
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button onClick={() => navigate("/book-appointment")}>
+              Reservar nuevo turno
+            </Button>
+            <Button onClick={handleSignOut}>Cerrar sesión</Button>
+          </div>
         </div>
 
         {isLoading ? <p>Cargando turnos...</p> : null}
