@@ -89,7 +89,6 @@ function Register() {
       apellido,
       mail,
       dni,
-      rol: "CLIENTE",
     });
 
     console.log("Supabase usuarios insert data:", profileData);
