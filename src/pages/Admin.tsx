@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
 
 type RelatedUser = {
@@ -36,11 +37,18 @@ function Admin() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [updatingAppointmentId, setUpdatingAppointmentId] = useState<string | null>(
+    null,
+  );
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     let isMounted = true;
 
     const loadAppointments = async () => {
+      setIsLoading(true);
+      setError("");
+
       const { data, error: appointmentsError } = await supabase
         .from("turnos")
         .select(
@@ -65,7 +73,25 @@ function Admin() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [refreshKey]);
+
+  const updateAppointmentStatus = async (appointmentId: string, estado: string) => {
+    setError("");
+    setUpdatingAppointmentId(appointmentId);
+
+    const { error: updateError } = await supabase
+      .from("turnos")
+      .update({ estado })
+      .eq("id", appointmentId);
+
+    if (updateError) {
+      setError("No se pudo actualizar el estado del turno.");
+    } else {
+      setRefreshKey((currentKey) => currentKey + 1);
+    }
+
+    setUpdatingAppointmentId(null);
+  };
 
   return (
     <main className="min-h-svh bg-muted/30 px-4 py-8 text-left">
@@ -84,7 +110,7 @@ function Admin() {
           <p>No hay turnos registrados.</p>
         ) : null}
 
-        {!isLoading && !error && appointments.length > 0 ? (
+        {!isLoading && appointments.length > 0 ? (
           <Card>
             <CardHeader>
               <CardTitle>Turnos</CardTitle>
@@ -104,6 +130,7 @@ function Admin() {
                       <th className="px-4 py-3 font-medium">Hora</th>
                       <th className="px-4 py-3 font-medium">Servicio</th>
                       <th className="px-4 py-3 font-medium">Estado</th>
+                      <th className="px-4 py-3 font-medium">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -125,6 +152,53 @@ function Admin() {
                           <td className="px-4 py-3">{appointment.hora}</td>
                           <td className="px-4 py-3">{appointment.servicio}</td>
                           <td className="px-4 py-3">{appointment.estado}</td>
+                          <td className="px-4 py-3">
+                            <div className="flex gap-2">
+                              {appointment.estado === "PENDIENTE" ? (
+                                <Button
+                                  disabled={updatingAppointmentId === appointment.id}
+                                  onClick={() =>
+                                    void updateAppointmentStatus(
+                                      appointment.id,
+                                      "CONFIRMADO",
+                                    )
+                                  }
+                                >
+                                  Confirmar
+                                </Button>
+                              ) : null}
+
+                              {appointment.estado === "CONFIRMADO" ? (
+                                <Button
+                                  disabled={updatingAppointmentId === appointment.id}
+                                  onClick={() =>
+                                    void updateAppointmentStatus(
+                                      appointment.id,
+                                      "FINALIZADO",
+                                    )
+                                  }
+                                >
+                                  Finalizar
+                                </Button>
+                              ) : null}
+
+                              {appointment.estado === "PENDIENTE" ||
+                              appointment.estado === "CONFIRMADO" ? (
+                                <Button
+                                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                  disabled={updatingAppointmentId === appointment.id}
+                                  onClick={() =>
+                                    void updateAppointmentStatus(
+                                      appointment.id,
+                                      "CANCELADO",
+                                    )
+                                  }
+                                >
+                                  Cancelar
+                                </Button>
+                              ) : null}
+                            </div>
+                          </td>
                         </tr>
                       );
                     })}
