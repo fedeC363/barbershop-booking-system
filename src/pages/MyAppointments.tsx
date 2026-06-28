@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/lib/supabase";
 
 type Appointment = {
@@ -21,6 +22,7 @@ type Appointment = {
 
 function MyAppointments() {
   const navigate = useNavigate();
+  const { role } = useAuth();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -75,6 +77,9 @@ function MyAppointments() {
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <h1 className="m-0 text-3xl font-bold">Mis Turnos</h1>
           <div className="flex flex-wrap gap-2">
+            {role === "admin" ? (
+              <Button onClick={() => navigate("/admin")}>Panel Admin</Button>
+            ) : null}
             <Button onClick={() => navigate("/book-appointment")}>
               Reservar nuevo turno
             </Button>

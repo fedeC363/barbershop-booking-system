@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import {
   Card,
@@ -34,6 +35,7 @@ function getRelation<T>(relation: T | T[] | null) {
 }
 
 function Admin() {
+  const navigate = useNavigate();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
@@ -96,11 +98,16 @@ function Admin() {
   return (
     <main className="min-h-svh bg-muted/30 px-4 py-8 text-left">
       <div className="mx-auto w-full max-w-6xl">
-        <div className="mb-6">
+        <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
+          <div>
           <h1 className="m-0 text-3xl font-bold">Panel de administración</h1>
           <p className="mt-2 text-muted-foreground">
             Todos los turnos registrados en Trimly.
           </p>
+          </div>
+          <Button onClick={() => navigate("/my-appointments")}>
+            Volver a Mis Turnos
+          </Button>
         </div>
 
         {isLoading ? <p>Cargando turnos...</p> : null}
