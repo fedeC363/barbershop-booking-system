@@ -9,15 +9,15 @@ const statusStyles = {
   },
   CONFIRMADO: {
     label: "Confirmado",
-    className: "bg-[#00508F] text-white",
+    className: "bg-green-600 text-white",
   },
   FINALIZADO: {
     label: "Confirmado",
-    className: "bg-[#00508F] text-white",
+    className: "bg-green-600 text-white",
   },
   CANCELADO: {
     label: "Cancelado",
-    className: "bg-[#4F3815] text-white",
+    className: "bg-red-600 text-white",
   },
 } as const;
 

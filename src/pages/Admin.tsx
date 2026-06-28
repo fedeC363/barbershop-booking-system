@@ -100,14 +100,17 @@ function Admin() {
   return (
     <main className="min-h-svh bg-muted/30 px-4 py-8 text-left">
       <div className="mx-auto w-full max-w-6xl">
+        <div className="mb-8 text-center">
+          <p className="brand-title text-4xl md:text-5xl">
+            ARANGURI BARBERSHOP
+          </p>
+        </div>
         <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
           <div>
-          <h1 className="m-0 text-3xl font-bold">
-            Panel de Administración - Aranguri Barbershop
-          </h1>
-          <p className="mt-2 text-muted-foreground">
-            Reserva tu turno online
-          </p>
+            <h1 className="m-0 text-3xl font-bold">Panel de Administración</h1>
+            <p className="mt-2 text-muted-foreground">
+              Gestiona los turnos de Aranguri Barbershop
+            </p>
           </div>
           <Button onClick={() => navigate("/my-appointments")}>
             Volver a Mis Turnos
@@ -202,7 +205,6 @@ function Admin() {
                               {appointment.estado === "PENDIENTE" ||
                               appointment.estado === "CONFIRMADO" ? (
                                 <Button
-                                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                                   disabled={updatingAppointmentId === appointment.id}
                                   onClick={() =>
                                     void updateAppointmentStatus(

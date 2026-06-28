@@ -221,8 +221,8 @@ function BookAppointment() {
                       aria-pressed={isSelected}
                       className={
                         isSelected
-                          ? "mx-auto size-10 rounded-full p-0"
-                          : "mx-auto size-10 rounded-full bg-secondary p-0 text-secondary-foreground hover:bg-secondary/70"
+                          ? "mx-auto size-10 rounded-full bg-[#00508F] p-0 text-white hover:bg-[#00508F]"
+                          : "mx-auto size-10 rounded-full bg-[#4F3815] p-0 text-white hover:bg-[#3B2910]"
                       }
                       disabled={isClosed}
                       key={dateValue}
@@ -253,8 +253,8 @@ function BookAppointment() {
                     aria-pressed={isSelected}
                     className={
                       isSelected
-                        ? "rounded-full"
-                        : "rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/70"
+                        ? "rounded-full bg-[#00508F] text-white hover:bg-[#00508F]"
+                        : "rounded-full bg-[#4F3815] text-white hover:bg-[#3B2910]"
                     }
                     key={availableHour}
                     onClick={() => setHora(availableHour)}
@@ -278,10 +278,10 @@ function BookAppointment() {
               return (
                 <Button
                   aria-pressed={isSelected}
-                  className={
-                    isSelected
-                      ? "h-16 text-base"
-                      : "h-16 bg-secondary text-base text-secondary-foreground hover:bg-secondary/70"
+                    className={
+                      isSelected
+                      ? "h-16 bg-[#00508F] text-base text-white hover:bg-[#00508F]"
+                      : "h-16 bg-[#4F3815] text-base text-white hover:bg-[#3B2910]"
                   }
                   key={availableService}
                   onClick={() => setServicio(availableService)}
@@ -306,8 +306,8 @@ function BookAppointment() {
                   aria-pressed={isSelected}
                   className={
                     isSelected
-                      ? "h-14 text-base"
-                      : "h-14 bg-secondary text-base text-secondary-foreground hover:bg-secondary/70"
+                      ? "h-14 bg-[#00508F] text-base text-white hover:bg-[#00508F]"
+                      : "h-14 bg-[#4F3815] text-base text-white hover:bg-[#3B2910]"
                   }
                   key={peluquero.id}
                   onClick={() => setPeluqueroId(peluquero.id)}

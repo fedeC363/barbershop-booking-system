@@ -76,9 +76,9 @@ function MyAppointments() {
   return (
     <main className="min-h-svh bg-background px-4 py-8">
       <div className="mx-auto w-full max-w-3xl">
-        <div className="mb-6">
-          <p className="text-xl font-bold uppercase tracking-wider">
-            Aranguri Barbershop
+        <div className="mb-8 text-center">
+          <p className="brand-title text-4xl md:text-5xl">
+            ARANGURI BARBERSHOP
           </p>
           <p className="mt-1 text-sm text-muted-foreground">
             Reserva tu turno online

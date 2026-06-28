@@ -46,7 +46,7 @@ function Login() {
     <main className="flex min-h-svh items-center justify-center bg-background px-4 py-8 text-left">
       <div className="grid w-full max-w-md gap-6">
         <header className="text-center">
-          <h1 className="text-4xl font-bold">Aranguri Barbershop</h1>
+          <h1 className="brand-title text-4xl">ARANGURI BARBERSHOP</h1>
           <p className="mt-2 text-muted-foreground">
             Reserva tu turno online
           </p>
