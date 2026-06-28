@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { formatDate, formatTime } from "@/lib/dateTime";
 import { supabase } from "@/lib/supabase";
 
 type RelatedUser = {
@@ -100,9 +101,11 @@ function Admin() {
       <div className="mx-auto w-full max-w-6xl">
         <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
           <div>
-          <h1 className="m-0 text-3xl font-bold">Panel de administración</h1>
+          <h1 className="m-0 text-3xl font-bold">
+            Panel de Administración - Aranguri Barbershop
+          </h1>
           <p className="mt-2 text-muted-foreground">
-            Todos los turnos registrados en Trimly.
+            Todos los turnos registrados en el sistema.
           </p>
           </div>
           <Button onClick={() => navigate("/my-appointments")}>
@@ -155,8 +158,12 @@ function Admin() {
                           <td className="px-4 py-3">
                             {barber?.nombre ?? "Sin asignar"}
                           </td>
-                          <td className="px-4 py-3">{appointment.fecha}</td>
-                          <td className="px-4 py-3">{appointment.hora}</td>
+                          <td className="px-4 py-3">
+                            {formatDate(appointment.fecha)}
+                          </td>
+                          <td className="px-4 py-3">
+                            {formatTime(appointment.hora)}
+                          </td>
                           <td className="px-4 py-3">{appointment.servicio}</td>
                           <td className="px-4 py-3">{appointment.estado}</td>
                           <td className="px-4 py-3">

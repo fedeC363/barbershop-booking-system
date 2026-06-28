@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
+import { formatDate, formatTime } from "@/lib/dateTime";
 import { supabase } from "@/lib/supabase";
 
 type Appointment = {
@@ -74,6 +75,9 @@ function MyAppointments() {
   return (
     <main className="min-h-svh bg-background px-4 py-8">
       <div className="mx-auto w-full max-w-3xl">
+        <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+          Aranguri Barbershop
+        </p>
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <h1 className="m-0 text-3xl font-bold">Mis Turnos</h1>
           <div className="flex flex-wrap gap-2">
@@ -104,11 +108,11 @@ function MyAppointments() {
                 <CardContent className="grid gap-2 text-sm">
                   <p>
                     <span className="font-medium">Fecha:</span>{" "}
-                    {appointment.fecha}
+                    {formatDate(appointment.fecha)}
                   </p>
                   <p>
                     <span className="font-medium">Hora:</span>{" "}
-                    {appointment.hora}
+                    {formatTime(appointment.hora)}
                   </p>
                   <p>
                     <span className="font-medium">Servicio:</span>{" "}

@@ -44,12 +44,20 @@ function Login() {
 
   return (
     <main className="flex min-h-svh items-center justify-center bg-background px-4 py-8 text-left">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Iniciar sesion</CardTitle>
-          <CardDescription>Ingresa para ver tus turnos en Trimly.</CardDescription>
-        </CardHeader>
-        <CardContent>
+      <div className="grid w-full max-w-md gap-6">
+        <header className="text-center">
+          <h1 className="text-4xl font-bold">Aranguri Barbershop</h1>
+          <p className="mt-2 text-muted-foreground">
+            Reserva tu turno de forma rápida y sencilla.
+          </p>
+        </header>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Iniciar sesion</CardTitle>
+            <CardDescription>Ingresa para ver tus turnos.</CardDescription>
+          </CardHeader>
+          <CardContent>
           <form className="grid gap-4" onSubmit={handleSubmit}>
             <div className="grid gap-2">
               <Label htmlFor="mail">Mail</Label>
@@ -91,8 +99,9 @@ function Login() {
               ¿No tienes cuenta? Registrarse
             </Link>
           </form>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </main>
   );
 }
