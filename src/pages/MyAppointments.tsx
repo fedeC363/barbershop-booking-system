@@ -76,9 +76,14 @@ function MyAppointments() {
   return (
     <main className="min-h-svh bg-background px-4 py-8">
       <div className="mx-auto w-full max-w-3xl">
-        <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-          Aranguri Barbershop
-        </p>
+        <div className="mb-6">
+          <p className="text-xl font-bold uppercase tracking-wider">
+            Aranguri Barbershop
+          </p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Reserva tu turno online
+          </p>
+        </div>
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <h1 className="m-0 text-3xl font-bold">Mis Turnos</h1>
           <div className="flex flex-wrap gap-2">

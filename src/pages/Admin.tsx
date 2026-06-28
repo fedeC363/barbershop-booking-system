@@ -106,7 +106,7 @@ function Admin() {
             Panel de Administración - Aranguri Barbershop
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Todos los turnos registrados en el sistema.
+            Reserva tu turno online
           </p>
           </div>
           <Button onClick={() => navigate("/my-appointments")}>

@@ -111,7 +111,7 @@ function Register() {
         <header className="text-center">
           <h1 className="text-4xl font-bold">Aranguri Barbershop</h1>
           <p className="mt-2 text-muted-foreground">
-            Reserva tu turno de forma rápida y sencilla.
+            Reserva tu turno online
           </p>
         </header>
 

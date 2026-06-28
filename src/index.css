@@ -6,12 +6,12 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: oklch(0.922 0 0);
-  --code-bg: #f4f3ec;
-  --accent: oklch(0.97 0 0);
+  --text: #14293a;
+  --text-h: #14293a;
+  --bg: #ffcd82;
+  --border: #4f3815;
+  --code-bg: #fff4df;
+  --accent: #f4b963;
   --accent-bg: rgba(170, 59, 255, 0.1);
   --accent-border: rgba(170, 59, 255, 0.5);
   --social-bg: rgba(244, 243, 236, 0.5);
@@ -24,7 +24,7 @@
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
-  color-scheme: light dark;
+  color-scheme: light;
   color: var(--text);
   background: var(--bg);
   font-synthesis: none;
@@ -36,37 +36,37 @@
     font-size: 16px;
   }
 
-  --background: oklch(1 0 0);
+  --background: #ffcd82;
 
-  --foreground: oklch(0.145 0 0);
+  --foreground: #14293a;
 
-  --card: oklch(1 0 0);
+  --card: #fff8ec;
 
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: #14293a;
 
   --popover: oklch(1 0 0);
 
   --popover-foreground: oklch(0.145 0 0);
 
-  --primary: oklch(0.205 0 0);
+  --primary: #00508f;
 
-  --primary-foreground: oklch(0.985 0 0);
+  --primary-foreground: #ffffff;
 
-  --secondary: oklch(0.97 0 0);
+  --secondary: #f4b963;
 
-  --secondary-foreground: oklch(0.205 0 0);
+  --secondary-foreground: #14293a;
 
-  --muted: oklch(0.97 0 0);
+  --muted: #ffcd82;
 
-  --muted-foreground: oklch(0.556 0 0);
+  --muted-foreground: #4f3815;
 
   --accent-foreground: oklch(0.205 0 0);
 
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: #4f3815;
 
-  --input: oklch(0.922 0 0);
+  --input: #4f3815;
 
-  --ring: oklch(0.708 0 0);
+  --ring: #00508f;
 
   --chart-1: oklch(0.87 0 0);
 
@@ -95,26 +95,6 @@
   --sidebar-border: oklch(0.922 0 0);
 
   --sidebar-ring: oklch(0.708 0 0)
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
 }
 
 #root {

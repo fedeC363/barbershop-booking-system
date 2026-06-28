@@ -5,19 +5,19 @@ type AppointmentStatusBadgeProps = {
 const statusStyles = {
   PENDIENTE: {
     label: "Pendiente",
-    className: "bg-yellow-100 text-yellow-950",
+    className: "border border-[#4F3815] bg-[#FFCD82] text-[#14293A]",
   },
   CONFIRMADO: {
     label: "Confirmado",
-    className: "bg-green-100 text-green-950",
+    className: "bg-[#00508F] text-white",
   },
   FINALIZADO: {
     label: "Confirmado",
-    className: "bg-green-100 text-green-950",
+    className: "bg-[#00508F] text-white",
   },
   CANCELADO: {
     label: "Cancelado",
-    className: "bg-red-100 text-red-950",
+    className: "bg-[#4F3815] text-white",
   },
 } as const;
 
