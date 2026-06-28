@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import AppointmentStatusBadge from "@/components/AppointmentStatusBadge";
 import {
   Card,
   CardContent,
@@ -165,7 +166,9 @@ function Admin() {
                             {formatTime(appointment.hora)}
                           </td>
                           <td className="px-4 py-3">{appointment.servicio}</td>
-                          <td className="px-4 py-3">{appointment.estado}</td>
+                          <td className="px-4 py-3">
+                            <AppointmentStatusBadge status={appointment.estado} />
+                          </td>
                           <td className="px-4 py-3">
                             <div className="flex gap-2">
                               {appointment.estado === "PENDIENTE" ? (

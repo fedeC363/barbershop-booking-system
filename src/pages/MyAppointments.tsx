@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import AppointmentStatusBadge from "@/components/AppointmentStatusBadge";
 import {
   Card,
   CardContent,
@@ -120,7 +121,7 @@ function MyAppointments() {
                   </p>
                   <p>
                     <span className="font-medium">Estado:</span>{" "}
-                    {appointment.estado}
+                    <AppointmentStatusBadge status={appointment.estado} />
                   </p>
                   <p>
                     <span className="font-medium">Peluquero:</span>{" "}

@@ -181,11 +181,16 @@ function BookAppointment() {
   return (
     <main className="min-h-svh bg-muted/30 px-4 py-8 text-left">
       <form className="mx-auto grid w-full max-w-5xl gap-6" onSubmit={handleSubmit}>
-        <div>
-          <h1 className="m-0 text-3xl font-bold">Reservar turno</h1>
-          <p className="mt-2 text-muted-foreground">
-            Elige el momento y el servicio que prefieras.
-          </p>
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <h1 className="m-0 text-3xl font-bold">Reservar turno</h1>
+            <p className="mt-2 text-muted-foreground">
+              Elige el momento y el servicio que prefieras.
+            </p>
+          </div>
+          <Button onClick={() => navigate("/my-appointments")} type="button">
+            Volver a Mis Turnos
+          </Button>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
