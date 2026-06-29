@@ -177,7 +177,10 @@ npm run dev
 ## Capturas de pantalla
 
 ![Login](/img/capturas/Login.png)
-
+![Agenda](/img/capturas/Pantalla-de-turnos-agendados.png)
+![Panel-Admin](/img/capturas/Panel-de-administrador.png)
+![Reservas1](/img/capturas/Panatalla-para-reservar-turno-1.png)
+![Reservas2](/img/capturas/Panatalla-para-reservar-turno-2.png)
 ## Autor
 
 Federico Cuda
