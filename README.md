@@ -4,7 +4,7 @@ Sistema web de gestión y reserva de turnos para barbería desarrollado con Reac
 
 ## Live Demo
 
-https://barbershop-booking-system-rouge.vercel.app/#/login
+https://barbershop-booking-system-rouge.vercel.app
 
 ## Repositorio
 
