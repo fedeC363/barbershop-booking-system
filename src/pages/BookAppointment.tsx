@@ -47,6 +47,7 @@ function BookAppointment() {
   const [servicio, setServicio] = useState<Service | null>(null);
   const [peluqueroId, setPeluqueroId] = useState("");
   const [peluqueros, setPeluqueros] = useState<Barber[]>([]);
+  const [occupiedHours, setOccupiedHours] = useState<string[]>([]);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -118,6 +119,46 @@ function BookAppointment() {
       isMounted = false;
     };
   }, [navigate]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    if (!fecha || !peluqueroId) {
+      setOccupiedHours([]);
+      return () => {
+        isMounted = false;
+      };
+    }
+
+    setOccupiedHours([]);
+
+    const loadOccupiedHours = async () => {
+      const { data, error: occupiedHoursError } = await supabase
+        .from("turnos")
+        .select("hora")
+        .eq("fecha", fecha)
+        .eq("peluquero_id", peluqueroId);
+
+      if (!isMounted) return;
+      if (occupiedHoursError) {
+        setError(occupiedHoursError.message);
+        return;
+      }
+
+      const nextOccupiedHours = (data ?? []).map(({ hora }) =>
+        String(hora).slice(0, 5),
+      );
+      setOccupiedHours(nextOccupiedHours);
+      setHora((currentHour) =>
+        nextOccupiedHours.includes(currentHour) ? "" : currentHour,
+      );
+    };
+
+    void loadOccupiedHours();
+    return () => {
+      isMounted = false;
+    };
+  }, [fecha, peluqueroId]);
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -307,14 +348,18 @@ function BookAppointment() {
             <CardContent className="grid grid-cols-3 gap-3 sm:grid-cols-4">
               {hours.map((availableHour) => {
                 const isSelected = hora === availableHour;
+                const isOccupied = occupiedHours.includes(availableHour);
                 return (
                   <Button
                     aria-pressed={isSelected}
                     className={
-                      isSelected
+                      isOccupied
+                        ? "cursor-not-allowed rounded-full bg-gray-200 text-gray-500 opacity-100 hover:bg-gray-200"
+                        : isSelected
                         ? "rounded-full bg-[#00508F] text-white hover:bg-[#00508F]"
                         : "rounded-full bg-[#4F3815] text-white hover:bg-[#3B2910]"
                     }
+                    disabled={isOccupied}
                     key={availableHour}
                     onClick={() => setHora(availableHour)}
                     type="button"
