@@ -10,6 +10,10 @@ https://barbershop-booking-system-rouge.vercel.app
 
 https://github.com/fedeC363/barbershop-booking-system
 
+## Usuario Administrador de prueba
+mail: fjcuda@gmail.com
+contraseña: federico123
+
 ---
 
 ## Descripción
