@@ -123,9 +123,11 @@ Antes de registrar una reserva se verifica nuevamente la disponibilidad del hora
 
 De esta forma se evita que dos usuarios reserven simultáneamente el mismo turno.
 
+![Flujo](/img/capturas/Flujo-app.png)
+
 ### Diseño de la experiencia de usuario
 
-La interfaz fue diseñada para priorizar simplicidad y rapidez de uso.
+La interfaz fue diseñada para priorizar simplicidad y rapidez de uso. Los colores fueron elegidos para transmitir tranquilidad al usuario
 
 Las decisiones principales fueron:
 
