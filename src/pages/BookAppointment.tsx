@@ -22,7 +22,7 @@ const hours = [
   "15:00", "16:00", "17:00", "18:00", "19:00", "20:00",
 ];
 const services: Service[] = ["Corte", "Barba", "Corte y Barba"];
-const weekDays = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+const weekDays = ["Mar", "Mié", "Jue", "Vie", "Sáb"];
 
 function formatLocalDate(date: Date) {
   const year = date.getFullYear();
@@ -31,9 +31,18 @@ function formatLocalDate(date: Date) {
   return `${year}-${month}-${day}`;
 }
 
+function parseLocalDate(value: string) {
+  const [year, month, day] = value.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
 function BookAppointment() {
   const navigate = useNavigate();
   const [fecha, setFecha] = useState("");
+  const [visibleMonth, setVisibleMonth] = useState(() => {
+    const currentDate = new Date();
+    return new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+  });
   const [hora, setHora] = useState("");
   const [servicio, setServicio] = useState<Service | null>(null);
   const [peluqueroId, setPeluqueroId] = useState("");
@@ -45,19 +54,36 @@ function BookAppointment() {
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+  const maxDate = new Date(today);
+  maxDate.setDate(maxDate.getDate() + 60);
 
-  // Genera solamente los días comprendidos entre hoy y el final del mes actual.
-  const calendarDays = Array.from(
-    { length: lastDay.getDate() - today.getDate() + 1 },
-    (_, index) =>
-      new Date(today.getFullYear(), today.getMonth(), today.getDate() + index),
+  const firstDayOfMonth = new Date(
+    visibleMonth.getFullYear(),
+    visibleMonth.getMonth(),
+    1,
   );
-  const leadingEmptyDays = Array.from({ length: today.getDay() });
-  const monthTitle = today.toLocaleDateString("es-AR", {
+  const calendarStart = new Date(firstDayOfMonth);
+  calendarStart.setDate(calendarStart.getDate() - calendarStart.getDay());
+  const calendarDays = Array.from({ length: 42 }, (_, index) => {
+    const date = new Date(calendarStart);
+    date.setDate(calendarStart.getDate() + index);
+    return date;
+  });
+  const openCalendarDays = calendarDays.filter(
+    (date) => date.getDay() !== 0 && date.getDay() !== 1,
+  );
+  const monthTitle = visibleMonth.toLocaleDateString("es-AR", {
     month: "long",
     year: "numeric",
   });
+  const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+  const lastAvailableMonth = new Date(
+    maxDate.getFullYear(),
+    maxDate.getMonth(),
+    1,
+  );
+  const canGoToPreviousMonth = visibleMonth > currentMonth;
+  const canGoToNextMonth = visibleMonth < lastAvailableMonth;
 
   useEffect(() => {
     let isMounted = true;
@@ -98,14 +124,13 @@ function BookAppointment() {
     setError("");
     setSuccessMessage("");
 
-    const selectedDate = calendarDays.find(
-      (date) => formatLocalDate(date) === fecha,
-    );
+    const selectedDate = fecha ? parseLocalDate(fecha) : null;
 
     // Los domingos (0) y lunes (1), además de fechas fuera del rango, no son reservables.
     if (
       !selectedDate ||
       selectedDate < today ||
+      selectedDate > maxDate ||
       selectedDate.getDay() === 0 ||
       selectedDate.getDay() === 1
     ) {
@@ -197,22 +222,54 @@ function BookAppointment() {
           <Card>
             <CardHeader>
               <CardTitle>Selecciona la fecha</CardTitle>
-              <CardDescription className="capitalize">{monthTitle}</CardDescription>
+              <CardDescription className="flex items-center justify-between gap-3">
+                <Button
+                  aria-label="Mes anterior"
+                  className="h-9 border bg-transparent px-3 text-foreground hover:bg-muted"
+                  disabled={!canGoToPreviousMonth}
+                  onClick={() =>
+                    setVisibleMonth(
+                      new Date(
+                        visibleMonth.getFullYear(),
+                        visibleMonth.getMonth() - 1,
+                        1,
+                      ),
+                    )
+                  }
+                  type="button"
+                >
+                  ← Mes anterior
+                </Button>
+                <span className="capitalize">{monthTitle}</span>
+                <Button
+                  aria-label="Mes siguiente"
+                  className="h-9 border bg-transparent px-3 text-foreground hover:bg-muted"
+                  disabled={!canGoToNextMonth}
+                  onClick={() =>
+                    setVisibleMonth(
+                      new Date(
+                        visibleMonth.getFullYear(),
+                        visibleMonth.getMonth() + 1,
+                        1,
+                      ),
+                    )
+                  }
+                  type="button"
+                >
+                  Mes siguiente →
+                </Button>
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-7 gap-2 text-center">
+              <div className="grid grid-cols-5 gap-2 text-center">
                 {weekDays.map((day) => (
                   <span className="pb-2 text-xs font-medium text-muted-foreground" key={day}>
                     {day}
                   </span>
                 ))}
-                {leadingEmptyDays.map((_, index) => (
-                  <span aria-hidden="true" key={`empty-${index}`} />
-                ))}
-                {calendarDays.map((date) => {
+                {openCalendarDays.map((date) => {
                   const dateValue = formatLocalDate(date);
-                  // Filtra domingos y lunes deshabilitando sus botones.
-                  const isClosed = date.getDay() === 0 || date.getDay() === 1;
+                  const isOutsideRange = date < today || date > maxDate;
                   const isSelected = fecha === dateValue;
 
                   return (
@@ -222,9 +279,11 @@ function BookAppointment() {
                       className={
                         isSelected
                           ? "mx-auto size-10 rounded-full bg-[#00508F] p-0 text-white hover:bg-[#00508F]"
+                          : isOutsideRange
+                            ? "mx-auto size-10 rounded-full bg-gray-200 p-0 text-gray-500 opacity-100"
                           : "mx-auto size-10 rounded-full bg-[#4F3815] p-0 text-white hover:bg-[#3B2910]"
                       }
-                      disabled={isClosed}
+                      disabled={isOutsideRange}
                       key={dateValue}
                       onClick={() => setFecha(dateValue)}
                       type="button"

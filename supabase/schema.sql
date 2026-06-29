@@ -4,7 +4,7 @@ create table if not exists public.usuarios (
   apellido text not null,
   mail text not null unique,
   dni text not null unique,
-  rol text not null default 'cliente' check (rol in ('cliente', 'admin'))
+  rol text not null default 'CLIENTE' check (rol in ('ADMIN', 'CLIENTE'))
 );
 
 create table if not exists public.peluqueros (

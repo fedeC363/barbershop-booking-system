@@ -87,7 +87,7 @@ function MyAppointments() {
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <h1 className="m-0 text-3xl font-bold">Mis Turnos</h1>
           <div className="flex flex-wrap gap-2">
-            {role === "admin" ? (
+            {role === "ADMIN" ? (
               <Button onClick={() => navigate("/admin")}>Panel Admin</Button>
             ) : null}
             <Button onClick={() => navigate("/book-appointment")}>

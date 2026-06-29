@@ -14,7 +14,7 @@ function AdminRoute({ children }: PropsWithChildren) {
     return <Navigate replace to="/login" />;
   }
 
-  if (role !== "admin") {
+  if (role !== "ADMIN") {
     return <Navigate replace to="/my-appointments" />;
   }
 

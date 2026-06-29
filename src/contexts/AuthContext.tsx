@@ -9,7 +9,7 @@ import type { User } from "@supabase/supabase-js";
 
 import { supabase } from "@/lib/supabase";
 
-type UserRole = "cliente" | "admin";
+type UserRole = "CLIENTE" | "ADMIN";
 
 type AuthContextValue = {
   isLoading: boolean;
@@ -46,8 +46,8 @@ function AuthProvider({ children }: PropsWithChildren) {
 
       if (!isMounted) return;
 
-      const normalizedRole = data?.rol?.toLowerCase();
-      setRole(normalizedRole === "admin" ? "admin" : "cliente");
+      const normalizedRole = data?.rol?.toUpperCase();
+      setRole(normalizedRole === "ADMIN" ? "ADMIN" : "CLIENTE");
       setIsLoading(false);
     };
 
