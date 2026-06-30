@@ -77,6 +77,28 @@ Además, cuenta con un panel de administración protegido mediante roles, desde 
 
 * Vercel
 
+## Uso de Inteligencia Artificial
+
+Durante el desarrollo del proyecto se utilizaron herramientas de inteligencia artificial como apoyo al proceso de desarrollo:
+
+# ChatGPT
+
+Se utilizó para:
+
+Análisis y validación de decisiones de arquitectura.
+Revisión de diseño de interfaz y experiencia de usuario.
+Resolución de dudas técnicas sobre React, TypeScript, Supabase y Vercel.
+Generación y mejora de documentación técnica.
+Revisión de consultas SQL y políticas de seguridad (RLS).
+# Codex
+
+Se utilizó para:
+
+Asistencia en tareas de refactorización.
+Generación de código a partir de requerimientos específicos.
+Identificación y corrección de errores.
+Automatización de cambios repetitivos en el código.
+
 ---
 
 ## Arquitectura y decisiones técnicas
