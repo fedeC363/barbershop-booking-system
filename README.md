@@ -50,8 +50,6 @@ Además, cuenta con un panel de administración protegido mediante roles, desde 
 
 ## Características técnicas
 
-## Características técnicas
-
 * Calendario de reservas navegable
 * Restricción de reservas a los próximos 60 días
 * Bloqueo de horarios ocupados
