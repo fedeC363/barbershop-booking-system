@@ -81,7 +81,7 @@ Además, cuenta con un panel de administración protegido mediante roles, desde 
 
 Durante el desarrollo del proyecto se utilizaron herramientas de inteligencia artificial como apoyo al proceso de desarrollo:
 
-# ChatGPT
+ChatGPT
 
 Se utilizó para:
 
@@ -90,7 +90,7 @@ Revisión de diseño de interfaz y experiencia de usuario.
 Resolución de dudas técnicas sobre React, TypeScript, Supabase y Vercel.
 Generación y mejora de documentación técnica.
 Revisión de consultas SQL y políticas de seguridad (RLS).
-# Codex
+Codex
 
 Se utilizó para:
 
